@@ -1,47 +1,53 @@
 <template>
-  <n-grid cols="8 s:8 m:8 l:8 xl:4 2xl:4" :y-gap="8" responsive="screen">
-    <n-gi offset="l:2 xl:1 2xl:1" span="8 s:8 m:8 l:4 xl:2 2xl:2">
-      <n-upload
-        v-if="!showJsonTable"
-        accept=".xls"
-        :show-file-list="false"
-        @before-upload="handleBeforeUpload"
-      >
-        <n-upload-dragger>
-          <div style="margin-bottom: 12px">
-            <n-icon size="48" :depth="3">
-              <FileExcelOutlinedIcon />
-            </n-icon>
-          </div>
-          <n-text style="font-size: 16px"
-            >点击或者拖动文件到该区域来上传</n-text
+  <n-config-provider :theme="theme">
+    <n-layout position="absolute">
+      <n-grid cols="8 s:8 m:8 l:8 xl:4 2xl:4" :y-gap="8" responsive="screen">
+        <n-gi offset="l:2 xl:1 2xl:1" span="8 s:8 m:8 l:4 xl:2 2xl:2">
+          <n-upload
+            v-if="!showJsonTable"
+            accept=".xls"
+            :show-file-list="false"
+            @before-upload="handleBeforeUpload"
           >
-          <n-p depth="3" style="margin: 8px 0 0 0"
-            >请不要上传敏感数据，比如你的银行卡号和密码，信用卡号有效期和安全码</n-p
-          >
-        </n-upload-dragger>
-      </n-upload>
-      <n-data-table
-        v-else
-        ref="table"
-        :columns="columns"
-        :data="dataTable"
-        max-height="70vh"
-        virtual-scroll
-      />
-    </n-gi>
-    <n-gi offset="1 s:1 m:1 l:2 xl:1 2xl:1" span="6 s:6 m:6 l:4 xl:2 2xl:2">
-      <n-space>
-        <n-button type="primary" @click="sortByKey()">排序</n-button>
-        <n-button @click="downloadFile()">下载</n-button>
-      </n-space>
-    </n-gi>
-  </n-grid>
-  <ReloadPrompt />
+            <n-upload-dragger>
+              <div style="margin-bottom: 12px">
+                <n-icon size="48" :depth="3">
+                  <FileExcelOutlinedIcon />
+                </n-icon>
+              </div>
+              <n-text style="font-size: 16px"
+                >点击或者拖动 XLS 文件到该区域来上传</n-text
+              >
+              <n-p depth="3" style="margin: 8px 0 0 0"
+                >请不要上传敏感数据，比如你的银行卡号和密码，信用卡号有效期和安全码</n-p
+              >
+            </n-upload-dragger>
+          </n-upload>
+          <n-data-table
+            v-else
+            ref="table"
+            :columns="columns"
+            :data="dataTable"
+            max-height="70vh"
+            virtual-scroll
+          />
+        </n-gi>
+        <n-gi offset="1 s:1 m:1 l:2 xl:1 2xl:1" span="6 s:6 m:6 l:4 xl:2 2xl:2">
+          <n-space justify="center">
+            <n-button type="primary" size="large" @click="sortByKey()"
+              >排序</n-button
+            >
+            <n-button size="large" @click="downloadFile()">下载</n-button>
+          </n-space>
+        </n-gi>
+      </n-grid>
+      <ReloadPrompt />
+    </n-layout>
+  </n-config-provider>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { computed, defineComponent, ref } from "vue";
 import {
   NUpload,
   NUploadDragger,
@@ -53,6 +59,10 @@ import {
   NButton,
   NDataTable,
   NSpace,
+  NConfigProvider,
+  NLayout,
+  useOsTheme,
+  darkTheme,
 } from "naive-ui";
 import { FileExcelOutlined as FileExcelOutlinedIcon } from "@vicons/antd";
 import ReloadPrompt from "./ReloadPrompt.vue";
@@ -71,10 +81,14 @@ export default defineComponent({
     NButton,
     NDataTable,
     NSpace,
+    NConfigProvider,
+    NLayout,
+
     FileExcelOutlinedIcon,
     ReloadPrompt,
   },
   setup() {
+    const osThemeRef = useOsTheme();
     const dataTable = ref<any[]>([]);
     let dataTableHeader = {};
     const showJsonTable = ref(false);
@@ -110,6 +124,8 @@ export default defineComponent({
       return xlsx.writeFile(wb, "1.xls");
     };
     return {
+      theme: computed(() => (osThemeRef.value === "dark" ? darkTheme : null)),
+      osTheme: osThemeRef,
       // const
       columns: [
         {
@@ -147,10 +163,8 @@ export default defineComponent({
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  height: 100%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
 }
 </style>

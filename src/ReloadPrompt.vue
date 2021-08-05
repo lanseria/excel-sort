@@ -10,13 +10,11 @@ const close = async () => {
 <template>
   <div v-if="offlineReady || needRefresh" class="pwa-toast" role="alert">
     <div class="message">
-      <span v-if="offlineReady"> App ready to work offline </span>
-      <span v-else>
-        New content available, click on reload button to update.
-      </span>
+      <span v-if="offlineReady"> 应用已经准备好离线启动 </span>
+      <span v-else> 新的更新已经下载, 点击刷新进行更新 </span>
     </div>
-    <button v-if="needRefresh" @click="updateServiceWorker()">Reload</button>
-    <button @click="close">Close</button>
+    <button v-if="needRefresh" @click="updateServiceWorker()">刷新</button>
+    <button @click="close">关闭</button>
   </div>
 </template>
 
