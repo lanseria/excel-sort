@@ -37,6 +37,7 @@
       </n-space>
     </n-gi>
   </n-grid>
+  <ReloadPrompt />
 </template>
 
 <script lang="ts">
@@ -54,6 +55,7 @@ import {
   NSpace,
 } from "naive-ui";
 import { FileExcelOutlined as FileExcelOutlinedIcon } from "@vicons/antd";
+import ReloadPrompt from "./ReloadPrompt.vue";
 import xlsx from "xlsx";
 import { orderBy } from "lodash-es";
 export default defineComponent({
@@ -70,6 +72,7 @@ export default defineComponent({
     NDataTable,
     NSpace,
     FileExcelOutlinedIcon,
+    ReloadPrompt,
   },
   setup() {
     const dataTable = ref<any[]>([]);
