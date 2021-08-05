@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-cn">
+<html lang="zh">
   <head>
     <meta charset="UTF-8" />
     <link rel="apple-touch-icon" sizes="180x180" href="/excel-sort/apple-touch-icon.png" />
@@ -11,12 +11,61 @@
     <meta name="theme-color" content="#ffffff" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>表格排序App</title>
-    <script type="module" crossorigin src="/excel-sort/assets/index.29289764.js"></script>
-    <link rel="modulepreload" href="/excel-sort/assets/vendor.98fe13f6.js">
-    <link rel="stylesheet" href="/excel-sort/assets/index.90f38bc2.css">
+    <script type="module" crossorigin src="/excel-sort/assets/index.f08ef004.js"></script>
+    <link rel="modulepreload" href="/excel-sort/assets/vendor.c19243bb.js">
+    <link rel="stylesheet" href="/excel-sort/assets/index.0929fb41.css">
   <link rel="manifest" href="/excel-sort/manifest.webmanifest"></head>
   <body>
-    <div id="app"></div>
+    <div id="app">
+      <ul class="strip-loading">
+        <li style="--line-index: 1"></li>
+        <li style="--line-index: 2"></li>
+        <li style="--line-index: 3"></li>
+        <li style="--line-index: 4"></li>
+        <li style="--line-index: 5"></li>
+        <li style="--line-index: 6"></li>
+      </ul>
+      <style>
+        #app {
+          display: grid;
+        }
+        #app ul.strip-loading {
+          margin: auto;
+        }
+        .strip-loading {
+          padding: 0;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 200px;
+          height: 200px;
+        }
+
+        .strip-loading li {
+          --time: calc((var(--line-index) - 1) * 200ms);
+          border-radius: 3px;
+          width: 6px;
+          height: 30px;
+          background-color: #33cc99;
+          animation: beat 1.5s ease-in-out var(--time) infinite;
+          list-style-type: none;
+        }
+
+        li + li {
+          margin-left: 5px;
+        }
+
+        @keyframes beat {
+          0%,
+          100% {
+            transform: scaleY(1);
+          }
+          50% {
+            transform: scaleY(0.5);
+          }
+        }
+      </style>
+    </div>
     
   </body>
 </html>
