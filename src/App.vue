@@ -41,7 +41,6 @@
           </n-space>
         </n-gi>
       </n-grid>
-      <ReloadPrompt />
     </n-layout>
   </n-config-provider>
 </template>
@@ -65,7 +64,6 @@ import {
   darkTheme,
 } from "naive-ui";
 import { FileExcelOutlined as FileExcelOutlinedIcon } from "@vicons/antd";
-import ReloadPrompt from "./ReloadPrompt.vue";
 import xlsx from "xlsx";
 import { orderBy } from "lodash-es";
 export default defineComponent({
@@ -84,8 +82,7 @@ export default defineComponent({
     NConfigProvider,
     NLayout,
 
-    FileExcelOutlinedIcon,
-    ReloadPrompt,
+    FileExcelOutlinedIcon
   },
   setup() {
     const osThemeRef = useOsTheme();
